@@ -11,7 +11,7 @@ function App() {
   const [dataList, setDataList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  const API_URL = "https://glucometer-1.onrender.com";
+  const API_URL= "https://glucometer-2.onrender.com";
 
   const fetchData = async () => {
     const res = await axios.get(`${API_URL}/GlucoMeter`);
