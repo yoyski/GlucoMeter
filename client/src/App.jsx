@@ -11,8 +11,10 @@ function App() {
   const [dataList, setDataList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
+  const API_URL = "https://glucometer.onrender.com";
+
   const fetchData = async () => {
-    const res = await axios.get("http://localhost:3000/GlucoMeter");
+    const res = await axios.get(`${API_URL}/GlucoMeter`);
     setDataList(res.data);
     console.log(res.data);
   };
@@ -24,7 +26,7 @@ function App() {
   const addRecord = async () => {
     const category = getCategory(testType, data);
 
-    const res = await axios.post("http://localhost:3000/GlucoMeter", {
+    const res = await axios.post(`${API_URL}/GlucoMeter`, {
       date: new Date().toLocaleDateString(),
       result: `${testType}: ${data.level} ${data.unit} - ${category}`,
     });
