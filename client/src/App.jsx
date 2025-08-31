@@ -11,7 +11,7 @@ function App() {
   const [dataList, setDataList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  const API_URL= "https://glucometer-2.onrender.com";
+  const API_URL = "https://glucometer-2.onrender.com";
 
   const fetchData = async () => {
     const res = await axios.get(`${API_URL}/GlucoMeter`);
@@ -37,11 +37,11 @@ function App() {
 
   function dataRecords() {
     return (
-      <div className="max-w-md mx-auto mt-8 p-1 bg-white rounded-lg shadow-lg border border-gray-200">
-        <h2 className="text-xl font-semibold text-gray-800">
+      <div className="w-full mt-8 p-3 bg-white rounded-lg shadow-lg border border-gray-200">
+        <h2 className="text-xl font-semibold text-gray-800 text-center sm:text-left">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md 
+            className="w-full sm:w-auto px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md 
              hover:bg-blue-600 active:scale-95 transition-all duration-200"
           >
             {isOpen ? "Hide Result" : "Show Result"}
@@ -51,13 +51,15 @@ function App() {
           (dataList.length === 0 ? (
             <p className="text-gray-500 text-center">No records found.</p>
           ) : (
-            <ul className="space-y-3">
+            <ul className="space-y-3 mt-4">
               {dataList.map((data) => (
                 <li
                   key={data._id}
-                  className="bg-gray-50 p-3 rounded-lg shadow-sm hover:shadow-md transition"
+                  className="bg-gray-50 p-3 rounded-lg shadow-sm hover:shadow-md transition text-center sm:text-left"
                 >
-                  <span className="text-gray-700 font-medium">{data.date}</span>
+                  <span className="text-gray-700 font-medium block sm:inline">
+                    {data.date}
+                  </span>
                   <span className="block mt-1 text-gray-600 text-sm">
                     {data.result}
                   </span>
@@ -127,9 +129,9 @@ function App() {
   ) {
     return (
       <div
-        className={`bg-gradient-to-br ${colorCard} text-white p-6 rounded-2xl shadow-xl w-full max-w-md mx-auto transition transform hover:scale-[1.02] hover:shadow-2xl`}
+        className={`bg-gradient-to-br ${colorCard} text-white p-6 rounded-2xl shadow-xl w-full transition transform hover:scale-[1.02] hover:shadow-2xl`}
       >
-        <div className="flex justify-between items-center mb-3">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 gap-2">
           <p className="text-sm font-medium tracking-wide uppercase opacity-80">
             {testType}
           </p>
@@ -146,6 +148,7 @@ function App() {
       </div>
     );
   }
+
   function getCategory(testType, { unit, level }) {
     const newLevel = unit === "mg/dL" ? level : level * 18;
 
@@ -187,14 +190,16 @@ function App() {
   }
 
   return (
-    <>
-      <div className="max-w-md mx-auto mt-10 bg-blue-600 p-6 rounded-2xl shadow-2xl text-white">
-        <h1 className="text-2xl font-bold mb-4">GlucoMeter</h1>
+    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-8 bg-gray-100">
+      <div className="w-full max-w-sm sm:max-w-lg md:max-w-2xl lg:max-w-3xl xl:max-w-4xl bg-blue-600 p-6 sm:p-8 rounded-2xl shadow-2xl text-white">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center">
+          GlucoMeter
+        </h1>
 
         {step === 1 && (
           <div className="flex flex-col gap-3">
             <button
-              className="bg-red-400 hover:bg-red-500 text-white py-2 px-4 rounded-lg transition"
+              className="w-full bg-red-400 hover:bg-red-500 text-white py-3 px-4 rounded-lg transition"
               onClick={() => {
                 setTestType("Fasting Blood Sugar");
                 setStep(2);
@@ -203,7 +208,7 @@ function App() {
               Fasting Blood Sugar
             </button>
             <button
-              className="bg-green-400 hover:bg-green-500 text-white py-2 px-4 rounded-lg transition"
+              className="w-full bg-green-400 hover:bg-green-500 text-white py-3 px-4 rounded-lg transition"
               onClick={() => {
                 setTestType("Random Blood Sugar");
                 setStep(2);
@@ -221,48 +226,47 @@ function App() {
               e.preventDefault();
               setStep(3);
             }}
+            className="flex flex-col gap-4"
           >
-            <div className="flex flex-col gap-4">
-              <input
-                required
-                type="number"
-                placeholder={`Enter your ${testType}`}
-                onChange={(e) =>
-                  setData((prev) => ({
-                    ...prev,
-                    level: Number(e.target.value),
-                  }))
-                }
-                className="p-3 rounded-lg border text-black focus:outline-none focus:ring-2 focus:ring-yellow-400"
-              />
+            <input
+              required
+              type="number"
+              placeholder={`Enter your ${testType}`}
+              onChange={(e) =>
+                setData((prev) => ({
+                  ...prev,
+                  level: Number(e.target.value),
+                }))
+              }
+              className="w-full p-3 rounded-lg border text-sm text-black focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            />
 
-              <select
-                required
-                onChange={(e) =>
-                  setData((prev) => ({ ...prev, unit: e.target.value }))
-                }
-                className="p-3 rounded-lg border text-black focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            <select
+              required
+              onChange={(e) =>
+                setData((prev) => ({ ...prev, unit: e.target.value }))
+              }
+              className="w-full p-3 rounded-lg border text-black focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            >
+              <option value="">-- Select Unit --</option>
+              <option value="mg/dL">mg/dL</option>
+              <option value="mmol/L">mmol/L</option>
+            </select>
+
+            <div className="flex flex-col sm:flex-row justify-between gap-3 mt-4">
+              <button
+                type="button"
+                className="w-full sm:w-auto bg-gray-300 hover:bg-gray-400 text-black py-2 px-4 rounded-lg transition"
+                onClick={() => setStep(1)}
               >
-                <option value="">-- Select Unit --</option>
-                <option value="mg/dL">mg/dL</option>
-                <option value="mmol/L">mmol/L</option>
-              </select>
-
-              <div className="flex justify-between mt-4">
-                <button
-                  type="button"
-                  className="bg-gray-300 hover:bg-gray-400 text-black py-2 px-4 rounded-lg transition"
-                  onClick={() => setStep(1)}
-                >
-                  Prev
-                </button>
-                <button
-                  type="submit"
-                  className="bg-yellow-400 hover:bg-yellow-500 text-black py-2 px-4 rounded-lg transition"
-                >
-                  Show Result
-                </button>
-              </div>
+                Prev
+              </button>
+              <button
+                type="submit"
+                className="w-full sm:w-auto bg-yellow-400 hover:bg-yellow-500 text-black py-2 px-4 rounded-lg transition"
+              >
+                Show Result
+              </button>
             </div>
           </form>
         )}
@@ -271,15 +275,15 @@ function App() {
           <div className="flex flex-col gap-4">
             {testType === "Random Blood Sugar" && randomBloodSugar(data)}
             {testType === "Fasting Blood Sugar" && fastingBloodSugar(data)}
-            <div className="flex justify-between">
+            <div className="flex flex-col sm:flex-row justify-between gap-3">
               <button
-                className="bg-gray-300 hover:bg-gray-400 text-black py-2 px-4 rounded-lg transition"
+                className="w-full sm:w-auto bg-gray-300 hover:bg-gray-400 text-black py-2 px-4 rounded-lg transition"
                 onClick={() => setStep(2)}
               >
                 Prev
               </button>
               <button
-                className="bg-green-400 hover:bg-green-500 text-white py-2 px-4 rounded-lg transition"
+                className="w-full sm:w-auto bg-green-400 hover:bg-green-500 text-white py-2 px-4 rounded-lg transition"
                 onClick={() => {
                   addRecord();
                   setStep(1);
@@ -291,7 +295,7 @@ function App() {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 
