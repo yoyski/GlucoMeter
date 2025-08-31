@@ -35,41 +35,63 @@ function App() {
     console.log(res.data);
   };
 
+  const deleteRecord = async (id) => {
+    try {
+      await axios.delete(`${API_URL}/GlucoMeter/${id}`);
+      setDataList(dataList.filter((record) => record._id !== id));
+    } catch (error) {
+      console.error("Error deleting record:", error);
+    }
+  };
+
   function dataRecords() {
-    return (
-      <div className="w-full mt-8 p-3 bg-white rounded-lg shadow-lg border border-gray-200">
-        <h2 className="text-xl font-semibold text-gray-800 text-center sm:text-left">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="w-full sm:w-auto px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md 
-             hover:bg-blue-600 active:scale-95 transition-all duration-200"
-          >
-            {isOpen ? "Hide Result" : "Show Result"}
-          </button>
-        </h2>
-        {isOpen &&
-          (dataList.length === 0 ? (
-            <p className="text-gray-500 text-center">No records found.</p>
-          ) : (
-            <ul className="space-y-3 mt-4">
-              {dataList.map((data) => (
-                <li
-                  key={data._id}
-                  className="bg-gray-50 p-3 rounded-lg shadow-sm hover:shadow-md transition text-center sm:text-left"
-                >
+  return (
+    <div className="flex justify-center flex-col w-full mt-8 p-3 bg-white rounded-lg shadow-lg border border-gray-200">
+      <div className="flex justify-center">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md 
+          hover:bg-blue-600 active:scale-95 transition-all duration-200"
+        >
+          {isOpen ? "Hide Result" : "Show Result"}
+        </button>
+      </div>
+
+      {isOpen &&
+        (dataList.length === 0 ? (
+          <p className="text-gray-500 text-center mt-4">No records found.</p>
+        ) : (
+          <ul className="space-y-3 mt-4">
+            {dataList.map((data) => (
+              <li
+                key={data._id}
+                className="flex justify-between flex-col gap-2 items-center bg-gray-50 p-3 rounded-lg shadow-sm hover:shadow-md transition"
+              >
+                <div>
                   <span className="text-gray-700 font-medium block sm:inline">
                     {data.date}
                   </span>
-                  <span className="block mt-1 text-gray-600 text-sm">
+                  <span className="block text-gray-600 text-sm">
                     {data.result}
                   </span>
-                </li>
-              ))}
-            </ul>
-          ))}
-      </div>
-    );
-  }
+                </div>
+                <button
+                  className="px-3 py-1 text-sm rounded-lg bg-red-500 text-white hover:bg-red-600 active:scale-95 transition"
+                  onClick={() => {
+                    deleteRecord(data._id);
+                    console.log(data._id);
+                  }}
+                >
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+        ))}
+    </div>
+  );
+}
+
 
   const classifications = [
     {
