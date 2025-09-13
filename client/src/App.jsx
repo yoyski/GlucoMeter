@@ -32,6 +32,8 @@ function App() {
     });
 
     setDataList([...dataList, res.data]);
+    
+    setStep(1);
     console.log(res.data);
   };
 
@@ -307,7 +309,6 @@ function App() {
                 className="w-full sm:w-auto bg-green-400 hover:bg-green-500 text-white py-2 px-4 rounded-lg transition"
                 onClick={() => {
                   addRecord();
-                  setStep(1);
                 }}
               >
                 Save
