@@ -213,8 +213,8 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-8 bg-gray-100">
-      <div className="w-full max-w-sm sm:max-w-lg md:max-w-2xl lg:max-w-3xl xl:max-w-4xl bg-blue-600 p-6 sm:p-8 rounded-2xl shadow-2xl text-white">
+    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-8 bg-gradient-to-br from-cyan-100 via-blue-200 to-blue-400">
+      <div className="w-full max-w-sm sm:max-w-lg md:max-w-2xl lg:max-w-1xl xl:max-w-4xl bg-blue-600 p-6 sm:p-8 rounded-2xl shadow-2xl text-white">
         <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center">
           GlucoMeter
         </h1>
